@@ -1,117 +1,97 @@
 ﻿using System;
-using System.Linq;
-
-namespace Baitap;
-class Program
+class SinhVien
 {
-    static void Main()
+    public string HoTen { get; set; }
+    public string MSSV { get; set; }
+    public double DiemTrungBinh { get; set; }
+    public void NhapThongTin()
     {
-        //Bai1();
-        //Bai2();
-        //Bai3();
-        //Bai4();
-        //Bai5();
-        //Bai6();
-
+        Console.Write("Nhap ho va ten: ");
+        HoTen = Console.ReadLine();
+        Console.Write("Nhap ma so sinh vien: ");
+        MSSV = Console.ReadLine();
+        Console.Write("Nhap diem trung binh: ");
+        DiemTrungBinh = double.Parse(Console.ReadLine());
     }
-    // Bài 1: Tạo mảng số nguyên và tính tổng
-    static void Bai1()
+  
+    public void HienThi()
     {
-        Console.Write("Nhap so luong phan tu cua mang: ");
-        int n = int.Parse(Console.ReadLine());
-        int[] array = new int[n];
-
-        for (int i = 0; i < n; i++)
-        {
-            Console.Write($"Nhap phan tu thu {i + 1}: ");
-            array[i] = int.Parse(Console.ReadLine());
-        }
-
-        int sum = array.Sum();
-        Console.WriteLine($"Tong cac phan tu trong mang la: {sum}");
-    }
-    // Bài 2: Đếm số lượng ký tự trong chuỗi (không tính khoảng trắng và dấu câu)
-    static void Bai2()
-    {
-        Console.Write("Nhap mot chuoi: ");
-        string input = Console.ReadLine();
-
-        int charCount = input.Count(c => !char.IsWhiteSpace(c) && !char.IsPunctuation(c));
-
-        Console.WriteLine($"So luong ky tu trong chuoi (khong tinh khoang trang và dau cau) la: {charCount}");
-    }
-
-    // Bài 3: Tìm phần tử lớn nhất trong mảng
-    static void Bai3()
-    {
-        Console.Write("Nhap so luong phan tu cua mang: ");
-        int n = int.Parse(Console.ReadLine());
-        int[] array = new int[n];
-
-        for (int i = 0; i < n; i++)
-        {
-            Console.Write($"Nhap phan tu thu {i + 1}: ");
-            array[i] = int.Parse(Console.ReadLine());
-        }
-
-        int max = array.Max();
-        Console.WriteLine($"Phan tu lon nhat trong mang la: {max}");
-    }
-
-    // Bài 4: Đảo ngược chuỗi
-    static void Bai4()
-    {
-        Console.Write("Nhap mot chuoi: ");
-        string input = Console.ReadLine();
-
-        char[] charArray = input.ToCharArray();
-        Array.Reverse(charArray);
-
-        string reversedString = new string(charArray);
-
-        Console.WriteLine($"Chuoi đao nguoc la: {reversedString}");
-    }
-
-    // Bài 5: Kiểm tra mảng đối xứng (Palindrome)
-    static void Bai5()
-    {
-        Console.Write("Nhap so luong phan tu cua mang: ");
-        int n = int.Parse(Console.ReadLine());
-        int[] array = new int[n];
-
-        for (int i = 0; i < n; i++)
-        {
-            Console.Write($"Nhap phan tu thu {i + 1}: ");
-            array[i] = int.Parse(Console.ReadLine());
-        }
-
-        bool isPalindrome = true;
-        for (int i = 0; i < n / 2; i++)
-        {
-            if (array[i] != array[n - 1 - i])
-            {
-                isPalindrome = false;
-                break;
-            }
-        }
-
-        if (isPalindrome)
-            Console.WriteLine("Mang la mang đoi xung.");
-        else
-            Console.WriteLine("Mang khong phai la mang đoi xung.");
-    }
-
-    // Bài 6: Đếm số lần xuất hiện của một ký tự trong chuỗi
-    static void Bai6()
-    {
-        Console.Write("Nhap mot chuoi: ");
-        string input = Console.ReadLine();
-
-        Console.Write("Nhap ky tu can đem: ");
-        char character = char.Parse(Console.ReadLine());
-
-        int count = input.Count(c => c == character);
-
-        Console.WriteLine($"So lan xuat hien cua ky tu '{character}' trong chuoi la: {count}");
+        Console.WriteLine("Ho ten: " + HoTen);
+        Console.WriteLine("Ma sinh vien: " + MSSV);
+        Console.WriteLine("Diem trung binh: " + DiemTrungBinh);
     }
 }
+class DSSV
+{
+    private SinhVien[] danhSachSV;
+    private int soLuongSV;
+
+    public void NhapDanhSachSinhVien()
+    {
+        Console.Write("Nhap so luong sinh vien: ");
+        soLuongSV = int.Parse(Console.ReadLine());
+        danhSachSV = new SinhVien[soLuongSV];
+
+        for (int i = 0; i < soLuongSV; i++)
+        {
+            Console.WriteLine($"Nhap thong tin sinh vien thu {i + 1}:");
+            danhSachSV[i] = new SinhVien();
+            danhSachSV[i].NhapThongTin();
+        }
+    }
+    public void HienThiDanhSachSinhVien()
+    {
+        Console.Write("\nDanh sach sinh vien:");
+        for (int i = 0; i < soLuongSV; i++)
+        {
+            Console.WriteLine($"\nThong tin sinh vien thu {i + 1}:");
+            danhSachSV[i].HienThi();
+        }
+    }
+    public void TimKiemSinhVienTheoMSSV(string mssv)
+    {
+        int dem = 0;
+        for (int i = 0; i < soLuongSV; i++)
+        {
+            if (danhSachSV[i].MSSV == mssv)
+            {
+                Console.WriteLine("\nSinh vien duoc tim thay:");
+                danhSachSV[i].HienThi();
+                dem++;
+            }
+        }
+        if (dem==0)
+        {
+            Console.WriteLine("Khong tim thay sinh vien voi MSSV: " + mssv);
+        }
+    }
+    public void DiemTrungBinhCaoNhat()
+    {
+        SinhVien maxtb = danhSachSV[0];
+        for (int i = 0; i < soLuongSV; i++)
+        {
+            if (danhSachSV[i].DiemTrungBinh > maxtb.DiemTrungBinh)
+            {
+                maxtb = danhSachSV[i];
+            }
+        }
+        Console.WriteLine("Sinh vien co diem trung binh cao nhat: ");
+        maxtb.HienThi();
+    }
+
+}
+class Program
+{
+    public static void Main(String[] args)
+    {
+        DSSV ds  = new DSSV();
+        ds.NhapDanhSachSinhVien();
+        ds.HienThiDanhSachSinhVien();
+        Console.Write("Nhap MSSV cua sinh vien can tim: ");
+        string mssv = Console.ReadLine();
+        ds.TimKiemSinhVienTheoMSSV(mssv);
+        ds.DiemTrungBinhCaoNhat();
+        Console.ReadKey();
+    }
+}
+    
